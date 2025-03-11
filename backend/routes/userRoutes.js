@@ -10,13 +10,13 @@ const router = express.Router();
 // @access Public
 
 router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, phone, email, password } = req.body;
 
   try {
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ phone });
     if (user) return res.status(400).json({ message: "User already exists" });
 
-    user = new User({ name, email, password });
+    user = new User({ name, phone, email, password });
     await user.save();
 
     //create JWT payload
@@ -35,6 +35,7 @@ router.post("/register", async (req, res) => {
           user: {
             _id: user.id,
             name: user.name,
+            phone: user.phone,
             email: user.email,
             role: user.role,
           },
@@ -52,11 +53,11 @@ router.post("/register", async (req, res) => {
 // @desc Authenticate user
 // @access Public
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { phone, password } = req.body;
 
   try {
     //find the user by email
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ phone });
 
     if (!user) return res.status(400).json({ message: "Invalid Credentials" });
 
@@ -80,6 +81,7 @@ router.post("/login", async (req, res) => {
           user: {
             _id: user.id,
             name: user.name,
+            phone: user.phone,
             email: user.email,
             role: user.role,
           },
