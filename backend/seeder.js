@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const readline = require("readline");
 const Product = require("./models/Product");
 const User = require("./models/User");
 const Cart = require("./models/Cart")
@@ -45,4 +46,18 @@ const seedData = async () => {
   }
 };
 
-seedData();
+// Create a readline interface for user input
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+// Ask for confirmation
+rl.question("Are you sure you want to delete all data and seed the database? (y/n): ", (answer) => {
+  if (answer.toLowerCase() === "y") {
+    seedData();
+  } else {
+    console.log("Operation cancelled.");
+    process.exit();
+  }
+});
