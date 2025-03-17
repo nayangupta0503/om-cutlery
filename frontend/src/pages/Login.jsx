@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import login from '../assets/login.jpeg'
+import {loginUser} from '../redux/slices/authSlice'
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
 
-    const [email, setEmail] = useState("")
+    const [phone, setPhone] = useState("")
     const [password, setPassword] = useState("")
+    const dispatch = useDispatch()
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        console.log("User Login",{email, password})
+        dispatch(loginUser({phone, password}))
     }
 
   return (
@@ -24,13 +27,14 @@ const Login = () => {
                 Enter Your username and password to login
             </p>
             <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2">Email</label>
+                <label className="block text-sm font-semibold mb-2">Phone no</label>
                 <input 
-                  type="email" 
-                  value={email} 
-                  onChange={(e)=>setEmail(e.target.value)}
+                  type="tel" 
+                  value={phone} 
+                  onChange={(e)=>setPhone(e.target.value)}
                   className='w-full p-2 border rounded'
-                  placeholder='Enter Your email address'
+                  placeholder='Enter Your phone number'
+                  required
                 />
             </div>
             <div className='mb-4'>
@@ -41,6 +45,7 @@ const Login = () => {
                   onChange={(e)=>setPassword(e.target.value)}
                   className='w-full p-2 border rounded'
                   placeholder='Enter your Password' 
+                  required
                 />
             </div>
             <button type="submit" className='w-full bg-black text-white p-2 rounded-lg font-semibold hover:bg-gray-800 transition'>Sign In</button>
