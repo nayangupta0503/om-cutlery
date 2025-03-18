@@ -5,6 +5,7 @@ const UserManagement = () => {
     {
       _id: 12123,
       name: "Nayan",
+      phone: "1234567890",
       email: "nayan123@gmail.com",
       role: "admin",
     },
@@ -12,6 +13,7 @@ const UserManagement = () => {
 
   const [formData, setFormData] = useState({
     name: "",
+    phone: "",
     email: "",
     password: "",
     role: "customer", //default role`
@@ -31,6 +33,7 @@ const UserManagement = () => {
     //reset form data
     setFormData({
       name: "",
+      phone: "",
       email: "",
       password: "",
       role: "customer",
@@ -60,6 +63,17 @@ const UserManagement = () => {
               type="text"
               name="name"
               value={formData.name}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Phone</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
               onChange={handleChange}
               className="w-full p-2 border rounded"
               required
@@ -114,6 +128,7 @@ const UserManagement = () => {
           <thead className="bg-gray-100 text-xs uppercase text-gray-700">
             <tr>
               <th className="py-3 px-4">Name</th>
+              <th className="py-3 px-4">Phone</th>
               <th className="py-3 px-4">Email</th>
               <th className="py-3 px-4">Role</th>
               <th className="py-3 px-4">Actions</th>
@@ -125,6 +140,7 @@ const UserManagement = () => {
                 <td className="p-4 font-medium text-gray-900 whitespace-nowrap">
                   {user.name}
                 </td>
+                <td className="p-4">{user.phone}</td>
                 <td className="p-4">{user.email}</td>
                 <td className="p-4">
                   <select

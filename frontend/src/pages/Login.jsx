@@ -7,11 +7,16 @@ import { useDispatch } from 'react-redux'
 const Login = () => {
 
     const [phone, setPhone] = useState("")
+    const [phoneValid, setPhoneValid] = useState(false)
     const [password, setPassword] = useState("")
     const dispatch = useDispatch()
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+        if(phone.length !== 10 || isNaN(phone)){
+            setPhoneValid(true)
+            return
+        }
         dispatch(loginUser({phone, password}))
     }
 
@@ -31,11 +36,15 @@ const Login = () => {
                 <input 
                   type="tel" 
                   value={phone} 
-                  onChange={(e)=>setPhone(e.target.value)}
+                  onChange={(e)=>{
+                    setPhone(e.target.value)
+                    setPhoneValid(false)
+                  }}
                   className='w-full p-2 border rounded'
                   placeholder='Enter Your phone number'
                   required
                 />
+                <label className={`${phoneValid ? 'block text-red-500' : 'hidden'}`}>Please enter valid phone number</label>
             </div>
             <div className='mb-4'>
                 <label className='block text-sm font-semibold mb-2'>Password</label>

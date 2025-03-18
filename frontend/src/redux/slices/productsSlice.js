@@ -25,6 +25,7 @@ export const fetchProductsByFilters = createAsyncThunk(
     if (maxPrice) query.append("maxPrice", maxPrice);
     if (sortBy) query.append("sortBy", sortBy);
     if (search) query.append("search", search);
+    if (category) query.append("category", category);
     if (material) query.append("material", material);
     if (brand) query.append("brand", brand);
     if (limit) query.append("limit", limit);
@@ -73,7 +74,7 @@ export const fetchSimilarProducts = createAsyncThunk(
   }
 );
 
-productSlice = createSlice({
+const productSlice = createSlice({
     name: "products",
     initialState: {
         products : [],
@@ -122,7 +123,59 @@ productSlice = createSlice({
         })
         .addCase(fetchProductsByFilters.fulfilled, (state, action) => {
             state.loading = false;
-            state.products = action.payload;
+            state.products = Array.isArray(action.payload) ? action.payload : [];
         })
+        .addCase(fetchProductsByFilters.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+        })
+        // handle fetching single product details
+        .addCase(fetchProductDetails.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
+        .addCase(fetchProductDetails.fulfilled, (state, action) => {
+          state.loading = false;
+          state.selectedProduct = action.payload;
+        })
+        .addCase(fetchProductDetails.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.error.message;
+        })
+        // handle updating product
+        .addCase(updateProduct.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
+        .addCase(updateProduct.fulfilled, (state, action) => {
+          state.loading = false;
+          const updatedProduct = action.payload;
+          const index = state.products.findIndex(
+            (product) => product._id === updatedProduct._id
+          );
+          if (index !== -1) {
+            state.products[index] = updatedProduct;
+          }
+        })
+        .addCase(updateProduct.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.error.message;
+        })
+        // handle fetching similar products
+        .addCase(fetchSimilarProducts.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+      })
+      .addCase(fetchSimilarProducts.fulfilled, (state, action) => {
+          state.loading = false;
+          state.products = action.payload;
+      })
+      .addCase(fetchSimilarProducts.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.error.message;
+      })
     }
 })
+
+export const { setFilters, clearFilters } = productSlice.actions;
+export default productSlice.reducer;
