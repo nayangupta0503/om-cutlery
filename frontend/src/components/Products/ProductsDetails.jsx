@@ -1,62 +1,37 @@
 import React, { useEffect, useState } from "react";
 import {toast} from 'sonner'
 import ProductGrid from "./ProductGrid";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductDetails, fetchSimilarProducts } from "../../redux/slices/productsSlice";
+import { addToCart } from "../../redux/slices/cartSlice";
+import { useLocation, useParams } from "react-router-dom";
 
-const selectedProduct = {
-  name: "Medium Size Basket",
-  price: 99,
-  originalPrice: 200,
-  description:
-    "A medium-sized plastic basket perfect for organizing household items, toys, or laundry. Durable and easy to clean.",
-  brand: "Kiwi",
-  material: "Plastic",
-  sizes: ["Medium", "Large", "Extra large"],
-  colors: ["Red", "Green"],
-  images: [
-    {
-      url: "https://firebasestorage.googleapis.com/v0/b/om-cutlary.appspot.com/o/Product%20Images%2Fimage%3A250613Jul%2021%2C%20202217%3A18%3A48%20PM.jpg?alt=media&token=81e779fe-6441-499c-b625-02c4a1e50afa",
-      altText: "Medium Size Basket",
-    },
-    {
-      url: "https://picsum.photos/200?random=5",
-      altText: "Medium Size Basket",
-    },
-  ],
-};
 
-const similarProducts = [
-    {
-        _id:1,
-        name:"Product 1",
-        price: 100,
-        images:[{url:"https://picsum.photos/200?random=1", altText: "Product 1"}]
-    },
-    {
-        _id:2,
-        name:"Product 2",
-        price: 100,
-        images:[{url:"https://picsum.photos/200?random=2", altText: "Product 2"}]
-    },
-    {
-        _id:3,
-        name:"Product 3",
-        price: 100,
-        images:[{url:"https://picsum.photos/200?random=3", altText: "Product 3"}]
-    },
-    {
-        _id:4,
-        name:"Product 4",
-        price: 100,
-        images:[{url:"https://picsum.photos/200?random=4", altText: "Product 4"}]
-    }
-]
 
-function ProductsDetails() {
+const ProductsDetails=({productId})=> {
+  const location = useLocation()
+  const {id} = useParams()
+  const dispatch = useDispatch()
+  const {selectedProduct, loading, error, similarProducts} = useSelector((state)=> state.products)
+  const {user, guestId} = useSelector((state)=> state.auth)
   const [mainImage, setMainImage] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantiy] = useState(1);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const productFetchId = productId || id;
+
+  useEffect(()=>{
+    if(productFetchId){
+      dispatch(fetchProductDetails(productFetchId))
+      dispatch(fetchSimilarProducts({id: productFetchId}))
+    }
+  },[dispatch, productFetchId])
+
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[location.pathname])
 
   const handleAddToCart=()=>{
     if(!selectedSize || !selectedColor){
@@ -68,13 +43,31 @@ function ProductsDetails() {
 
     setIsButtonDisabled(true)
 
-    setTimeout(()=>{
-        toast.success("Product Added to Cart",{
-            duration: 1000,
-        })
-        setIsButtonDisabled(false)
-    },500)
-}   
+   dispatch(
+    addToCart({
+      productId: productFetchId,
+      quantity,
+      size: selectedSize,
+      color: selectedColor,
+      guestId,
+      userId: user?._id,
+    })
+   )
+   .then(()=>{
+    toast.success("Product added to cart"),{
+      duration: 1000,
+    }
+   })
+   .finally(()=>{
+      setIsButtonDisabled(false)
+   })
+};
+
+const handleQuantityChange =(action) =>{
+  if(action=="plus") setQuantiy((prev)=> prev+1)
+  if(action=="minus" && quantity>1) setQuantiy((prev)=> prev-1)
+}
+
 
   useEffect(() => {
     if (selectedProduct?.images?.length > 0) {
@@ -82,8 +75,17 @@ function ProductsDetails() {
     }
   }, [selectedProduct]);
 
+if(loading){
+  return <p>Loading...</p>
+}
+
+if(error){
+  return <p>Error: {error}</p>
+}
+
   return (
     <div className="p-6">
+    {selectedProduct && (
       <div className="max-2-6xl mx-auto bg-white p-8 rounded-lg">
         <div className="flex flex-col md:flex-row">
           {/* Left Thumbnails */}
@@ -177,17 +179,14 @@ function ProductsDetails() {
               <div className="flex items-center space-x-4 mt-2">
                 <button
                   className="px-2 py-1 bg-gray-200 rounded text-lg"
-                  onClick={() => {
-                    if (quantity === 1) return;
-                    setQuantiy((prev) => prev - 1);
-                  }}
+                  onClick={()=>handleQuantityChange("minus")}
                 >
                   -
                 </button>
                 <span className="text-lg">{quantity}</span>
                 <button
                   className="px-2 py-1 bg-gray-200 rounded text-lg"
-                  onClick={() => setQuantiy((prev) => prev + 1)}
+                  onClick={() => handleQuantityChange("plus")}
                 >
                   +
                 </button>
@@ -223,9 +222,10 @@ function ProductsDetails() {
             <h2 className="text-2xl text-center font-medium mb-4">
                 You May Also Like
             </h2>
-            <ProductGrid products={similarProducts}/>
+            <ProductGrid products={similarProducts} loading={loading} error={error}/>
         </div>
       </div>
+    )}
     </div>
   );
 }
