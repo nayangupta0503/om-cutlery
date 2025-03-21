@@ -3,19 +3,19 @@ import { Link } from "react-router-dom";
 import { TbBrandMeta } from "react-icons/tb";
 import { IoLogoInstagram } from "react-icons/io";
 import { RiTwitterXLine } from "react-icons/ri";
-import {FiPhoneCall} from "react-icons/fi"
+import { FiPhoneCall } from "react-icons/fi"
 
 const Footer = () => {
   return (
-    <footer className="border-t py-12">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-4 lg:px-0">
+    <footer className="py-12 border-t">
+      <div className="container grid grid-cols-1 gap-8 px-4 mx-auto md:grid-cols-4 lg:px-0">
         <div>
-          <h3 className="text-lg text-gray-800 mb-4">Newsletter</h3>
-          <p className="text-gray-500 mb-4">
+          <h3 className="mb-4 text-lg text-gray-800">Newsletter</h3>
+          <p className="mb-4 text-gray-500">
             Be the first to hear about new products, exclusiv events and online
             offers.
           </p>
-          <p className="font-medium text-sm text-gray-600 mb-6">
+          <p className="mb-6 text-sm font-medium text-gray-600">
             Sign up and get 10%off on your first order
           </p>
           {/* Newsletter Form */}
@@ -23,13 +23,11 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Enter Your Email"
-              className="p-3 w-full text-sm border border-gray-300 rounded-l-md
-              focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all"
+              className="w-full p-3 text-sm transition-all border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-gray-500"
             />
             <button
               type="submit"
-              className="bg-black text-white px-6 py-3 text-sm rounded-r-md hover:bg-gray-800
-              transition-all"
+              className="px-6 py-3 text-sm text-white transition-all bg-black rounded-r-md hover:bg-gray-800"
             >
               Subscribe
             </button>
@@ -37,48 +35,56 @@ const Footer = () => {
         </div>
         {/* Shop links */}
         <div>
-          <h3 className="text-lg text-gray-800 mb-4">Shop</h3>
+          <h3 className="mb-4 text-lg text-gray-800">Shop</h3>
           <ul className="space-y-2 text-gray-600">
             <li>
-              <Link to="#" className="hover:textgray-600 transition-colors">Kitchen Items</Link>
+              <Link to="#" className="transition-colors hover:textgray-600">Kitchen Items</Link>
             </li>
             <li>
-              <Link to="#" className="hover:textgray-600 transition-colors">Bathroom Items</Link>
+              <Link to="#" className="transition-colors hover:textgray-600">Bathroom Items</Link>
             </li>
             <li>
-              <Link to="#" className="hover:textgray-600 transition-colors">School Items</Link>
+              <Link to="#" className="transition-colors hover:textgray-600">School Items</Link>
             </li>
           </ul>
         </div>
         {/* support links */}
         <div>
-          <h3 className="text-lg text-gray-800 mb-4">Support</h3>
+          <h3 className="mb-4 text-lg text-gray-800">Support</h3>
           <ul className="space-y-2 text-gray-600">
             <li>
-              <Link to="#" className="hover:textgray-600 transition-colors">Contact Us</Link>
+              <Link to="#" className="transition-colors hover:textgray-600">Contact Us</Link>
             </li>
             <li>
-              <Link to="#" className="hover:textgray-600 transition-colors">About Us</Link>
+              <Link to="#" className="transition-colors hover:textgray-600">About Us</Link>
             </li>
             <li>
-              <Link to="#" className="hover:textgray-600 transition-colors">FAQs</Link>
+              <Link to="#" className="transition-colors hover:textgray-600">FAQs</Link>
             </li>
             <li>
-              <Link to="#" className="hover:textgray-600 transition-colors">Features</Link>
+              <Link to="#" className="transition-colors hover:textgray-600">Features</Link>
             </li>
           </ul>
         </div>
         {/* Follow us */}
         <div>
-          <h3 className="text-lg text-gray-800 mb-4">Follow Us</h3>
-          <div className="flex items-center space-x-4 mb-6">
+          <h3 className="mb-4 text-lg text-gray-800">Follow Us</h3>
+          <div className="flex items-center mb-6 space-x-4">
             <a 
               href="https://www.facebook.com" 
               target="blank" 
               rel="noopener noreferrer"
               className="hover:text-gray-300"
               >
-                <TbBrandMeta className="h-5 w-5"/>
+                <TbBrandMeta className="w-5 h-5"/>
+              </a>
+              <a 
+              href="https://www.instagram.com/omcutlury/" 
+              target="blank" 
+              rel="noopener noreferrer"
+              className="hover:text-gray-300"
+              >
+                <IoLogoInstagram className="w-5 h-5"/>
               </a>
               <a 
               href="https://www.facebook.com" 
@@ -86,27 +92,19 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="hover:text-gray-300"
               >
-                <IoLogoInstagram className="h-5 w-5"/>
-              </a>
-              <a 
-              href="https://www.facebook.com" 
-              target="blank" 
-              rel="noopener noreferrer"
-              className="hover:text-gray-300"
-              >
-                <RiTwitterXLine className="h-4 w-4"/>
+                <RiTwitterXLine className="w-4 h-4"/>
               </a>
           </div>
-          <h3 className="text-lg text-gray-800 mb-4">Call Us</h3>
+          <h3 className="mb-4 text-lg text-gray-800">Call Us</h3>
           <h3>
             <FiPhoneCall className="inline-block mr-2"/>
-            0123456789
+            9574860773
           </h3>
         </div>
       </div>
       {/* footer bottoms */}
-      <div className="container mx-auto mt-12 px-4 lg:px-0 border-t border-gray-200 pt-6">
-        <p className="text-gray-500 text-sm tracking-tighter text-center">
+      <div className="container px-4 pt-6 mx-auto mt-12 border-t border-gray-200 lg:px-0">
+        <p className="text-sm tracking-tighter text-center text-gray-500">
           &copy; 2025. All Rights Reserved.
         </p>
       </div>
