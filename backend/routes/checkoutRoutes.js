@@ -25,8 +25,8 @@ router.post("/", protect, async(req, res)=>{
             shippingAddress,
             paymentMethod,
             totalPrice,
-            paymentStatus: "Pending",
-            isPaid: false,
+            paymentStatus: paymentMethod === "COD" ? "Not Paid": "Pending",
+            isPaid: paymentMethod === "COD" ? false : false,
         });
         console.log(`Checkout created for user: ${req.user._id}`);
         res.status(201).json(newCheckout);
@@ -37,7 +37,7 @@ router.post("/", protect, async(req, res)=>{
 });
 
 // @route PUT /api/checkout/:id/pay
-// @desc Update   checkout to mark as paid after succesfull payment
+// @desc Update checkout to mark as paid after succesfull payment
 // @access Private
 router.put("/:id/pay", protect, async(req,res)=>{
     const {paymentStatus, paymentDetails} = req.body;
@@ -77,18 +77,18 @@ router.post("/:id/finalize", protect, async(req,res)=>{
             return res.status(404).json({message: "Checkout not found"})
         }
 
-        if(checkout.isPaid  && !checkout.isFinalized){
+        if(checkout.paymentMethod === "COD"  && !checkout.isFinalized){
             const finalOrder = await Order.create({
                 user: checkout.user,
                 orderItems: checkout.checkoutItems,
                 shippingAddress: checkout.shippingAddress,
                 paymentMethod: checkout.paymentMethod,
                 totalPrice: checkout.totalPrice,
-                isPaid: true,
-                paidAt: checkout.paidAt,
+                isPaid: false,
+                // paidAt: checkout.paidAt,
                 isDelivered: false,
-                paymentStatus: "paid",
-                paymentDetails: checkout.paymentDetails
+                paymentStatus: "not paid",
+                //paymentDetails: checkout.paymentDetails
             });
 
             // Mark the checkout as finalized

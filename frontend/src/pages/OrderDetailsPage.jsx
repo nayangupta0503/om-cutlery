@@ -1,38 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { fetchOrderDetails } from "../redux/slices/orderSlice";
 
 const OrderDetailsPage = () => {
   const { id } = useParams();
-  const [orderDetails, setOrderDetails] = useState(null);
+  const dispatch = useDispatch()
+  const {orderDetails, loading, error} = useSelector((state)=> state.orders)
 
-  useEffect(() => {
-    const mockOrderDetails = {
-      _id: id,
-      createdAt: new Date(),
-      isPaid: false,
-      isDelivered: false,
-      paymentMethod: "Cash on Delivery",
-      shippingMethod: "Standard",
-      shippingAddress: { city: "Vadodara", country: "India" },
-      orderItems: [
-        {
-          productId: "1",
-          name: "Product 1",
-          price: 100,
-          quantity: 1,
-          image: "https://picsum.photos/150?random=1",
-        },
-        {
-          productId: "2",
-          name: "Product 2",
-          price: 50,
-          quantity: 2,
-          image: "https://picsum.photos/150?random=2",
-        },
-      ],
-    };
-    setOrderDetails(mockOrderDetails);
-  }, [id]);
+  useEffect(()=>{
+    dispatch(fetchOrderDetails(id));
+  },[dispatch, id])
+
+  if(loading) return <p>Loading....</p>
+  if(error) return <p>Error: {error}</p>
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
@@ -81,10 +62,10 @@ const OrderDetailsPage = () => {
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-2">Shipping Info</h4>
-              <p>Shipping Method: {orderDetails.shippingMethod}</p>
+              <p>Shipping Method: Standard</p>
               <p>
                 Address:{" "}
-                {`${orderDetails.shippingAddress.city}, ${orderDetails.shippingAddress.country}`}
+                {`${orderDetails.shippingAddress.address},${orderDetails.shippingAddress.city}, ${orderDetails.shippingAddress.country},${orderDetails.shippingAddress.postalCode}`}
               </p>
             </div>
           </div>

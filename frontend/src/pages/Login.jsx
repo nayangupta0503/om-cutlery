@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import login from '../assets/login.jpeg'
 import {loginUser} from '../redux/slices/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { mergeCart } from '../redux/slices/cartSlice'
+import { mergeCart, fetchCart } from '../redux/slices/cartSlice'
 
 const Login = () => {
 
@@ -22,7 +22,8 @@ const Login = () => {
 
     useEffect(()=>{
       if(user){
-        if(cart.cart?.products.length() > 0 && guestId){
+        dispatch(fetchCart({ userId: user}));
+        if(cart?.products.length > 0 && guestId){
           dispatch(mergeCart({guestId, user})).then(()=>{
             navigate(isCheckoutRedirect ? "/checkout" : "/")
           });
@@ -30,7 +31,7 @@ const Login = () => {
           navigate(isCheckoutRedirect ? "/checkout" : "/")
         }
       }
-    },[user, guestId, cart. navigate, isCheckoutRedirect, dispatch])
+    },[user, guestId, cart, navigate, isCheckoutRedirect, dispatch])
 
     const handleSubmit = (e) =>{
         e.preventDefault();
