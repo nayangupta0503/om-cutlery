@@ -9,7 +9,7 @@ const router = express.Router()
 // @access Private/Admin
 router.get("/", protect, admin, async(req,res)=>{
     try {
-        const orders = await Order.find({}).populate("user", "id phone")
+        const orders = await Order.find({}).populate("user", "id phone name")
         res.json(orders)
     } catch (error) {
         console.error(error);
@@ -22,7 +22,7 @@ router.get("/", protect, admin, async(req,res)=>{
 // @access Private/Admin
 router.put("/:id", protect, admin, async(req,res)=>{
     try {
-        const order = await Order.findById(req.params.id);
+        const order = await Order.findById(req.params.id).populate("user", "name");
         if(order){
             order.status = req.body.status || order.status;
             order.isDelivered = req.body.status === "Delivered" ? true : order.isDelivered;

@@ -1,12 +1,18 @@
 import React from "react";
 import { FaBoxOpen, FaClipboardList, FaSignOutAlt, FaStore, FaUser } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { logout } from "../../redux/slices/authSlice";
+import { clearCart } from "../../redux/slices/cartSlice";
 
 const AdminSidebar = () => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleLogout = () =>{
+        dispatch(logout());
+        dispatch(clearCart());
         navigate("/")
     }
 
@@ -17,7 +23,7 @@ const AdminSidebar = () => {
           Om Cutlery
         </Link>
       </div>
-      <h2 className="text-xl font-medium mb-6 text-center">Admin Dashboard</h2>
+      <h2 className="mb-6 text-xl font-medium text-center">Admin Dashboard</h2>
 
       <nav className="flex flex-col space-y-2">
         <NavLink
@@ -66,7 +72,7 @@ const AdminSidebar = () => {
         </NavLink>
       </nav>
       <div className="mt-6">
-        <button onClick={handleLogout} className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded flex items-center justify-center space-x-2">
+        <button onClick={handleLogout} className="flex items-center justify-center w-full px-4 py-2 space-x-2 text-white bg-red-500 rounded hover:bg-red-600">
             <FaSignOutAlt/>
             <span>Logout</span>
         </button>
