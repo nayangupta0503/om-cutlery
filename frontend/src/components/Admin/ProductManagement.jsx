@@ -24,6 +24,10 @@ const ProductManagement = () => {
   return (
     <div className="p-6 mx-auto max-w-7xl">
       <h2 className="mb-6 text-2xl font-bold">Product Management</h2>
+      {/* add product button */}
+      <div className="py-4">
+        <Link className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600" to="/admin/create-product">Add New Product</Link>
+      </div>
       <div className="overflow-x-auto shadow-md sm:rounded-lg">
         <table className="min-w-full text-left text-gray-500">
           <thead className="text-xs text-gray-700 uppercase bg-gray-100">

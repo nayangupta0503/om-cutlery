@@ -22,7 +22,7 @@ export const creatProduct = createAsyncThunk(
   "adminProducts/createProduct",
   async (productData) => {
     const response = await axios.post(
-      `${API_URL}/api/admin/products`,
+      `${API_URL}/api/products`,
       productData,
       {
         headers: {
@@ -39,7 +39,7 @@ export const updateProduct = createAsyncThunk(
   "adminProducts/updateProduct",
   async ({ id, productData }) => {
     const response = await axios.put(
-      `${API_URL}/api/admin/products/${id}`,
+      `${API_URL}/api/products/${id}`,
       productData,
       {
         headers: {
@@ -55,7 +55,7 @@ export const updateProduct = createAsyncThunk(
 export const deleteProduct = createAsyncThunk(
   "adminProducts/deleteProduct",
   async (id) => {
-    const response = await axios.delete(`${API_URL}/api/admin/products/${id}`, {
+    await axios.delete(`${API_URL}/api/products/${id}`, {
       headers: {
         Authorization: `Bearer ${USER_TOKEN}`,
       },
@@ -101,7 +101,7 @@ const adminProductSlice = createSlice({
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.products = state.products.filter(
-          (product) => product._id !== action
+          (product) => product._id !== action.payload
         );
       });
   },

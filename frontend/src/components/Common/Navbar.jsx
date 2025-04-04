@@ -27,7 +27,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <nav className="container max-auto flex justify-between items-center py-4 px-6">
+      <nav className="container flex items-center justify-between px-6 py-4 mx-auto">
         {/* left-logo */}
         <div>
           <Link to="/" className="text-2xl font-medium">
@@ -36,31 +36,31 @@ const Navbar = () => {
         </div>
 
         {/* center - links */}
-        <div className="hidden md:flex space-x-6">
+        <div className="hidden space-x-6 md:flex">
           <Link
             to="/collections/all?category=Kitchen"
-            className="text-gray-700 hover:text-black text-sm font-medium uppercase"
+            className="text-sm font-medium text-gray-700 uppercase hover:text-black"
           >
             Kitchen
           </Link>
 
           <Link
             to="/collections/all?category=Bathroom"
-            className="text-gray-700 hover:text-black text-sm font-medium uppercase"
+            className="text-sm font-medium text-gray-700 uppercase hover:text-black"
           >
             Bathroom
           </Link>
 
           <Link
             to="/collections/all?category=Kids"
-            className="text-gray-700 hover:text-black text-sm font-medium uppercase"
+            className="text-sm font-medium text-gray-700 uppercase hover:text-black"
           >
             Kids
           </Link>
 
           <Link
             to="/collections/all"
-            className="text-gray-700 hover:text-black text-sm font-medium uppercase"
+            className="text-sm font-medium text-gray-700 uppercase hover:text-black"
           >
             All Products
           </Link>
@@ -71,7 +71,7 @@ const Navbar = () => {
           {user && user.role === "admin" && (
             <Link
               to="/admin"
-              className="block bg-black px-2 rounded text-sm text-white"
+              className="block px-2 text-sm text-white bg-black rounded"
             >
               Admin
             </Link>
@@ -107,11 +107,11 @@ const Navbar = () => {
       >
         <div className="flex justify-end p-4">
           <button onClick={toggleNavDrawer}>
-            <IoMdClose className="h-6 w-6 text-gray-600" />
+            <IoMdClose className="w-6 h-6 text-gray-600" />
           </button>
         </div>
         <div className="p-4">
-          <h2 className="text-xl font-semibold mb-4">Menu</h2>
+          <h2 className="mb-4 text-xl font-semibold">Menu</h2>
           <nav>
             <Link
               to="/collections/all?category=Kitchen"

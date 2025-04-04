@@ -13,7 +13,7 @@ const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
-    const {user, guestId} = useSelector((state)=> state.auth)
+    const {user, guestId, loading} = useSelector((state)=> state.auth)
     const {cart} = useSelector((state)=> state.cart)
 
     // Get redirect parameter and check if it's checkout or something
@@ -79,7 +79,7 @@ const Login = () => {
                   required
                 />
             </div>
-            <button type="submit" className='w-full p-2 font-semibold text-white transition bg-black rounded-lg hover:bg-gray-800'>Sign In</button>
+            <button type="submit" className='w-full p-2 font-semibold text-white transition bg-black rounded-lg hover:bg-gray-800'>{loading ? "Loading..." : "Sign In"}</button>
             <p className='mt-6 text-sm text-center'>
                 Don't have an account?{" "}
                     <Link to={`/register?redirect=${encodeURIComponent(redirect)}`} className='text-blue-500'>

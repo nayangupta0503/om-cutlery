@@ -14,7 +14,7 @@ const Register = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const location = useLocation()
-    const {user, guestId} = useSelector((state)=> state.auth)
+    const {user, guestId, loading} = useSelector((state)=> state.auth)
     const {cart} = useSelector((state)=> state.cart)
 
     // Get redirect parameter and check if it's checkout or something
@@ -46,14 +46,14 @@ const Register = () => {
 
   return (
     <div className='flex'>
-      <div className='w-full md:w-1/2 flex-col justify-center items-center p-8 md:p-12'>
-        <form onSubmit={handleSubmit} className='w-full max-w-md bg-white p-8 rounded-lg border shadow-sm'>
+      <div className='flex-col items-center justify-center w-full p-8 md:w-1/2 md:p-12'>
+        <form onSubmit={handleSubmit} className='w-full max-w-md p-8 bg-white border rounded-lg shadow-sm'>
             <div className='flex justify-center mb-6'>
                 <h2 className='text-xl font-medium'>Om Cutlery</h2>
             </div>
-            <h2 className='text-2xl font-bold text-center mb-6'>Hey there! 👋</h2>
+            <h2 className='mb-6 text-2xl font-bold text-center'>Hey there! 👋</h2>
             <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2">Name*</label>
+                <label className="block mb-2 text-sm font-semibold">Name*</label>
                 <input 
                   type="text" 
                   value={name} 
@@ -64,7 +64,7 @@ const Register = () => {
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2">Phone Number*</label>
+                <label className="block mb-2 text-sm font-semibold">Phone Number*</label>
                 <input 
                   type="tel" 
                   value={phone} 
@@ -79,7 +79,7 @@ const Register = () => {
                 <label className={`${phoneValid ? 'block text-red-500' : 'hidden'}`}>Please enter valid phone number</label>
             </div>
             <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2">Email (optional)</label>
+                <label className="block mb-2 text-sm font-semibold">Email (optional)</label>
                 <input 
                   type="email" 
                   value={email} 
@@ -89,7 +89,7 @@ const Register = () => {
                 />
             </div>
             <div className='mb-4'>
-                <label className='block text-sm font-semibold mb-2'>Password*</label>
+                <label className='block mb-2 text-sm font-semibold'>Password*</label>
                 <input
                   type="password"
                   value={password}
@@ -99,18 +99,18 @@ const Register = () => {
                   required
                 />
             </div>
-            <button type="submit" className='w-full bg-black text-white p-2 rounded-lg font-semibold hover:bg-gray-800 transition'>Sign Up</button>
-            <p className='mt-6 text-center text-sm'>
+            <button type="submit" className='w-full p-2 font-semibold text-white transition bg-black rounded-lg hover:bg-gray-800'>{loading ? "Loading..." : "Sign Up"}</button>
+            <p className='mt-6 text-sm text-center'>
                 Already have an Account?{" "}
-                    <Link to={`/login?redirect=${encodeURIComponent    (redirect)}`}         
+                    <Link to={`/login?redirect=${encodeURIComponent(redirect)}`}         
                      className='text-blue-500'>
                      Login
                     </Link>
             </p>
         </form>
       </div>
-      <div className='hidden md:block w-1/2 bg-gray-800'>
-        <div className='h-full flex flex-col justify-center items-center'>
+      <div className='hidden w-1/2 bg-gray-800 md:block'>
+        <div className='flex flex-col items-center justify-center h-full'>
             <img
              src={login} 
              alt="Login"

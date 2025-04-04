@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { fetchProductDetails } from "../../redux/slices/productsSlice";
-import axios from "axios";
-import { updateProduct } from "../../redux/slices/adminProductSlice";
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { creatProduct } from '../../redux/slices/adminProductSlice';
+import axios from 'axios';
 
-const EditProductPage = () => {
+const CreateProduct = () => {
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-  const { id } = useParams()
-  const { selectedProduct, loading, error } = useSelector((state) => state.products)
-
-  const [productData, setProductData] = useState({
+const [productData, setProductData] = useState({
     name: "",
     description: "",
     price: 0,
@@ -29,16 +25,6 @@ const EditProductPage = () => {
   });
 
   const [uploading, setUploading] = useState(false);  // image uplaoding state
-
-  useEffect(() => {
-    dispatch(fetchProductDetails(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    if (selectedProduct) {
-      setProductData(selectedProduct);
-    }
-  }, [selectedProduct]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,16 +57,13 @@ const EditProductPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(updateProduct({id, productData}))
+    dispatch(creatProduct(productData))
     navigate("/admin/products")
   }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-
   return (
     <div className="max-w-5xl p-6 mx-auto rounded-md shadow-md">
-      <h2 className="mb-6 text-3xl font-bold">Edit Product</h2>
+      <h2 className="mb-6 text-3xl font-bold">Add a new Product</h2>
       <form onSubmit={handleSubmit}>
         {/* Name */}
         <div className="mb-6">
@@ -141,6 +124,19 @@ const EditProductPage = () => {
             type="text"
             name="sku"
             value={productData.sku}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+
+        {/* Category */}
+        <div className="mb-6">
+          <label className="block mb-2 font-semibold">Category</label>
+          <input
+            type="text"
+            name="category"
+            value={productData.category}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-md"
             required
@@ -208,11 +204,11 @@ const EditProductPage = () => {
           type="submit"
           className="w-full py-2 text-white transition-colors bg-green-500 rounded-md hover:bg-green-600"
         >
-          Update Product
+          Create a Product
         </button>
       </form>
     </div>
-  );
-};
+ );
+}
 
-export default EditProductPage;
+export default CreateProduct
