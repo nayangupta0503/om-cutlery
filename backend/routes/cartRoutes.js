@@ -210,7 +210,7 @@ router.post("/merge", protect, async (req, res) => {
 
         userCart.totalPrice = userCart.products.reduce(
           (acc, item) => acc + item.price * item.quantity
-        );
+        ,0);
         await userCart.save();
 
         // Remove the guest cart after merging

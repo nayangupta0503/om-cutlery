@@ -9,6 +9,7 @@ const Register = () => {
     const [name, setName] = useState("")
     const [phone, setPhone] = useState("")
     const [phoneValid, setPhoneValid] = useState(false)
+    const [invalidPassword, setInvalidPassword] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const dispatch = useDispatch();
@@ -36,6 +37,10 @@ const Register = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+        if(password.length < 8 || password.length > 20 || !/[a-zA-Z]/.test(password) || !/\d/.test(password) || !/[!@#$%^&*]/.test(password) ){ 
+            setInvalidPassword(true)
+            return
+        }
         if(phone.length !== 10 || isNaN(phone)){
             setPhoneValid(true)
             return
@@ -93,12 +98,17 @@ const Register = () => {
                 <input
                   type="password"
                   value={password}
-                  onChange={(e)=>setPassword(e.target.value)}
+                  onChange={(e)=>{
+                    setPassword(e.target.value)
+                    setInvalidPassword(false)
+                  }}
                   className='w-full p-2 border rounded'
                   placeholder='Enter your Password' 
                   required
                 />
             </div>
+            <label className={`${invalidPassword ? 'block text-red-500' : 'hidden'}`}>
+                Password must be 8-20 characters long, contain letters, numbers, and special characters.</label>
             <button type="submit" className='w-full p-2 font-semibold text-white transition bg-black rounded-lg hover:bg-gray-800'>{loading ? "Loading..." : "Sign Up"}</button>
             <p className='mt-6 text-sm text-center'>
                 Already have an Account?{" "}
