@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const NewArrival = () => {
   const scrollRef = useRef(null);
+  const navigate = useNavigate();
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(false);
@@ -77,10 +78,10 @@ const NewArrival = () => {
   }, [newArrivals]);
 
   return (
-    <section className="py-16 px-4 lg:px-0">
-      <div className="container mx-auto text-center mb-10 relative">
-        <h2 className="text-3xl font-bold mb-4">Explore New Arrivals</h2>
-        <p className="text-lg text-gray-600 mb-8">
+    <section className="px-4 py-16 lg:px-0">
+      <div className="container relative mx-auto mb-10 text-center">
+        <h2 className="mb-4 text-3xl font-bold">Explore New Arrivals</h2>
+        <p className="mb-8 text-lg text-gray-600">
           Discover the latest products
         </p>
 
@@ -125,6 +126,7 @@ const NewArrival = () => {
           <div
             key={product._id}
             className="min-w-[100%] sm:min-w-[50%] lg:min-w-[30%] relative"
+            onClick={() => navigate(`/product/${product._id}`)}
           >
             <img
               src={product.images[0]?.url}
@@ -132,7 +134,7 @@ const NewArrival = () => {
               draggable="false"
               className="w-full h-[500px] object-cover rounded-lg"
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-opacity-50 backdrop-blur-md text-white p-4 rounded-b-lg">
+            <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-opacity-50 rounded-b-lg backdrop-blur-md">
               <Link to={`/product/${product._id}`}>
                 <h4 className="font-medium">{product.name}</h4>
                 <p className="mt-1">&#8377;{product.price}</p>
