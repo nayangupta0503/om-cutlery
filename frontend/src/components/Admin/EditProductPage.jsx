@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductDetails } from "../../redux/slices/productsSlice";
 import axios from "axios";
 import { updateProduct } from "../../redux/slices/adminProductSlice";
+import { MdDelete } from "react-icons/md";
 
 const EditProductPage = () => {
 
@@ -23,7 +24,7 @@ const EditProductPage = () => {
     brand: "",
     sizes: [],
     colors: [],
-    collections: "",
+    collection: "",
     material: "",
     images: [],
   });
@@ -130,7 +131,7 @@ const EditProductPage = () => {
             value={productData.countInStock}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-md"
-            required
+            // required
           />
         </div>
 
@@ -141,6 +142,32 @@ const EditProductPage = () => {
             type="text"
             name="sku"
             value={productData.sku}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md"
+           // required
+          />
+        </div>
+
+        {/* Category */}
+        <div className="mb-6">
+          <label className="block mb-2 font-semibold">Category</label>
+          <input
+            type="text"
+            name="category"
+            value={productData.category}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+
+        {/* Brand */}
+        <div className="mb-6">
+          <label className="block mb-2 font-semibold">Brand</label>
+          <input
+            type="text"
+            name="brand"
+            value={productData.brand}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-md"
             required
@@ -187,6 +214,32 @@ const EditProductPage = () => {
           />
         </div>
 
+        {/* Collection */}
+        <div className="mb-6">
+          <label className="block mb-2 font-semibold">Collection</label>
+          <input
+            type="text"
+            name="collection"
+            value={productData.collection}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+
+        {/* Material */}
+        <div className="mb-6">
+          <label className="block mb-2 font-semibold">Material</label>
+          <input
+            type="text"
+            name="material"
+            value={productData.material}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+
         {/* Image Upload */}
         <div className="mb-6">
           <label className="block mb-2 font-semibold">Upload Image</label>
@@ -200,6 +253,47 @@ const EditProductPage = () => {
                   alt={image.altText || "Product Image"}
                   className="object-cover w-20 h-20 rounded-md shadow-md"
                 />
+                <button
+                  type="button"
+                  className="flex items-center justify-center w-8 h-8 mt-2 text-red-600 bg-white rounded-full shadow hover:bg-red-100"
+                  title="Delete image"
+                  onClick={async () => {
+                    if (window.confirm("Are you sure you want to delete this image?")) {
+                        try {
+                        // Extract public_id from image.url (remove version)
+                        // Cloudinary URLs: .../upload/v<version>/<public_id>.<ext>
+                        const urlParts = image.url.split("/");
+                        const uploadIndex = urlParts.findIndex(part => part === "upload");
+                        // Skip the version part (e.g., "v1712345678")
+                        let publicIdParts = urlParts.slice(uploadIndex + 2); // +2 skips 'upload' and version
+                        let publicIdWithExt = publicIdParts.join("/");
+                        const dotIndex = publicIdWithExt.lastIndexOf(".");
+                        const public_id = dotIndex !== -1 ? publicIdWithExt.substring(0, dotIndex) : publicIdWithExt;
+                        
+                        // Get token from localStorage (or your auth state)
+                        const token = localStorage.getItem("userToken");
+                        await axios.delete(
+                          `${import.meta.env.VITE_BACKEND_URL}/api/admin/products/delete-img`,
+                          {
+                            headers: {
+                              Authorization: `Bearer ${token}`,
+                              "Content-Type": "application/json"
+                            },
+                            data: { public_id }
+                          }
+                        );
+                        setProductData((prevData) => ({
+                          ...prevData,
+                          images: prevData.images.filter((_, i) => i !== index),
+                        }));
+                      } catch (err) {
+                        alert("Failed to delete image from server.");
+                      }
+                    }
+                  }}
+                >
+                  <MdDelete size={20} />
+                </button>
               </div>
             ))}
           </div>

@@ -5,26 +5,36 @@ import {RiTwitterXLine} from 'react-icons/ri'
 
 function Topbar() {
   return (
-    <div className='bg-rabbit-red text-white'>
-      <div className='container mx-auto flex justify-between items-center py-3 px-4'>
-        <div className='hidden md:flex items-center space-x-4'>
+    <div className='text-white bg-rabbit-red'>
+      <div className='container flex items-center justify-between px-4 py-3 mx-auto'>
+        <div className='items-center hidden space-x-4 md:flex'>
             <a className='hover:text-gray-300' href='#'>
-                <TbBrandMeta className='h-4 w-4'/>
+                <TbBrandMeta className='w-4 h-4'/>
             </a>
             <a href='#' className='hover:text-gray-300'>
-                <IoLogoInstagram className='h-4 w-4'/>
+                <IoLogoInstagram className='w-4 h-4'/>
             </a>
             <a href='#' className='hover:text-gray-300'>
-                <RiTwitterXLine className='h-4 w-4'/>
+                <RiTwitterXLine className='w-4 h-4'/>
             </a>
         </div>
-        <div className='text-sm text-center flex-grow'>
+        <div className='flex-grow text-sm text-center'>
             <span>All Types Of Plastic And Cutlery Items Are Available</span>
         </div>
         <div className='hidden md:text-sm md:block'>
             <a href='tel:+91 9574860773' className='text-sm hover:text-gray-300'>
                 Call Us
             </a>
+        </div>
+        <div className='hidden md:block md:text-sm'>
+          <a
+            href='https://maps.app.goo.gl/GCpFBaWBEBSDNGTj7'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-sm hover:text-gray-300'
+          >
+            &nbsp; Find Us
+          </a>
         </div>
       </div>
     </div>

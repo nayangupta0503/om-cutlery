@@ -4,6 +4,7 @@ import { TbBrandMeta } from "react-icons/tb";
 import { IoLogoInstagram } from "react-icons/io";
 import { RiTwitterXLine } from "react-icons/ri";
 import { FiPhoneCall } from "react-icons/fi"
+import { FaLocationDot } from "react-icons/fa6";
 
 const Footer = () => {
   return (
@@ -99,6 +100,10 @@ const Footer = () => {
           <h3>
             <FiPhoneCall className="inline-block mr-2"/>
             9574860773
+          </h3>
+          <h3 className="mt-4 text-lg text-gray-800">Find Us</h3>
+          <h3>
+            <FaLocationDot className="inline-block mr-2" /> A-154, Mangal Bazar, Bajwada, Mandvi, Vadodara, Gujarat 390001
           </h3>
         </div>
       </div>

@@ -6,13 +6,13 @@ const Hero = () => {
   return (
     <section className='relative'>
         <img className='w-full h-[400px] md:h-[600px] lg:h-[750px] object-cover' src={heroImg} alt="Loading" />
-        <div className='absolute inset-0 bg-black bg-opacity-5 flex items-center justify-center'>
-            <div className='text-center text-white p-6'>
-                <h1 className='text-4xl md:text-9xl font-bold tracking-tighter uppercase mb-4'>
+        <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-5'>
+            <div className='p-6 text-center text-white'>
+                <h1 className='mb-4 text-4xl font-bold tracking-tighter uppercase md:text-9xl'>
                     Kitchen <br/> Ready
                 </h1>
-                <p className='text-sm tracking-tighter md:text-lg mb-6'>Explore our kitchen-ready products</p>
-                <Link to="#" className="bg-white text-gray-950 px-6 py-2 rounded-sm text-lg">Shop Now</Link>
+                <p className='mb-6 text-sm tracking-tighter md:text-lg'>Explore our kitchen-ready products</p>
+                <Link to="/collections/all?category=Kitchen" className="px-6 py-2 text-lg bg-white rounded-sm text-gray-950">Shop Now</Link>
             </div>
         </div>
     </section>
