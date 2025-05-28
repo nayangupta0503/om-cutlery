@@ -33,12 +33,16 @@ const Checkout = () => {
     e.preventDefault();
     try {
       if (cart && cart.products.length > 0) {
+        // Calculate total price including shipping if needed
+        const shippingCharge = cart.totalPrice < 299 ? 50 : 0;
+        const finalTotalPrice = cart.totalPrice + shippingCharge;
+
         const res = await dispatch(
           createCheckout({
             checkoutItems: cart.products,
             shippingAddress,
             paymentMethod: "COD",
-            totalPrice: cart.totalPrice,
+            totalPrice: finalTotalPrice,
           })
         );
         if (res.payload && res.payload._id) {
@@ -82,12 +86,12 @@ const Checkout = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto py-10 px-6 tracking-tighter">
+    <div className="grid grid-cols-1 gap-8 px-6 py-10 mx-auto tracking-tighter lg:grid-cols-2 max-w-7xl">
       {/* Left Section */}
-      <div className="bg-white rounded-lg p-6">
-        <h2 className="text-2xl uppercase mb-6">Checkout</h2>
+      <div className="p-6 bg-white rounded-lg">
+        <h2 className="mb-6 text-2xl uppercase">Checkout</h2>
         <form onSubmit={handleCreateCheckout}>
-          <h3 className="text-lg mb-4">Contact Details</h3>
+          <h3 className="mb-4 text-lg">Contact Details</h3>
           <div className="mb-4">
             <label className="block text-gray-700"></label>
             <input
@@ -97,8 +101,8 @@ const Checkout = () => {
               disabled
             />
           </div>
-          <h3 className="text-lg mb-4">Delivery</h3>
-          <div className="mb-4 grid grid-cols-2 gap-4">
+          <h3 className="mb-4 text-lg">Delivery</h3>
+          <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-gray-700">First Name</label>
               <input
@@ -145,7 +149,7 @@ const Checkout = () => {
               required
             />
           </div>
-          <div className="mb-4 grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-gray-700">City</label>
               <input
@@ -211,22 +215,22 @@ const Checkout = () => {
             {!checkoutId ? (
               <button
                 type="submit"
-                className="w-full bg-black text-wrap text-white py-3 rounded"
+                className="w-full py-3 text-white bg-black rounded text-wrap"
               >
                 Order Now
               </button>
             ) : (
               <div>
-                <button onClick={()=>handleFinalizeCheckout(checkoutId)} className="w-full bg-black text-wrap text-white py-3 rounded">Place Order</button>
+                <button onClick={()=>handleFinalizeCheckout(checkoutId)} className="w-full py-3 text-white bg-black rounded text-wrap">Place Order</button>
               </div>
             )}
           </div>
         </form>
       </div>
       {/* Right Section */}
-      <div className="bg-gray-50 p-6 rounded-lg">
-        <h3 className="text-lg mb-4">Order Summary</h3>
-        <div className="border-t py-4 mb-4">
+      <div className="p-6 rounded-lg bg-gray-50">
+        <h3 className="mb-4 text-lg">Order Summary</h3>
+        <div className="py-4 mb-4 border-t">
           {cart.products.map((product, index) => (
             <div
               key={index}
@@ -236,7 +240,7 @@ const Checkout = () => {
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-20 h-24 object-cover mr-4"
+                  className="object-cover w-20 h-24 mr-4"
                 />
                 <div>
                   <h3 className="text-md">{product.name}</h3>
@@ -252,19 +256,19 @@ const Checkout = () => {
             </div>
           ))}
         </div>
-        <div className="flex justify-between items-center text-lg mb-4">
+        <div className="flex items-center justify-between mb-4 text-lg">
           <p>Subtotal</p>
           <p>&#8377;{cart.totalPrice?.toLocaleString()}</p>
         </div>
-        <div className="flex justify-between items-center text-lg">
+        <div className="flex items-center justify-between text-lg">
           <p>Shipping</p>
-          <p>{cart.totalPrice > 300 ? "Free" : `₹${50}` }</p>
+          <p>{cart.totalPrice > 299 ? "Free" : `₹${50}` }</p>
         </div>
-        <div className="flex justify-between items-center text-lg mt-4 border-t pt-4">
+        <div className="flex items-center justify-between pt-4 mt-4 text-lg border-t">
           <p>Total</p>
           <p>
             &#8377;
-            {(cart.totalPrice < 300 ? cart.totalPrice + 50 : cart.totalPrice).toLocaleString()}
+            {(cart.totalPrice < 299 ? cart.totalPrice + 50 : cart.totalPrice).toLocaleString()}
           </p>
         </div>
         <p>Payment Method: Cash on Delivery <br/> (Online Payment methods will be available very soon)</p>

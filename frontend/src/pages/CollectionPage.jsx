@@ -41,14 +41,14 @@ const CollectionPage = () => {
     <div className='flex flex-col lg:flex-row'>
         {/* Mobile Filter */}
         <button 
-        className='flex items-center justify-center p-2 border lg:hidden mt-[6.5rem] bg-white border-gray-300 rounded shadow hover:bg-gray-100 transition-colors duration-200'
+        className='flex items-center justify-center p-2 transition-colors duration-200 bg-white border border-gray-300 rounded shadow lg:hidden hover:bg-gray-100'
         onClick={toggleSidebar}
         >
             <FaFilter className='mr-2'/> Filters
         </button>
 
         {/* filter sidebar */}
-        <div ref={sidebarRef} className={`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 w-64 z-50 mt-[6.5rem] bg-white overflow-y-auto transition-transform duration-300 lg:static lg:translate-x-0`}>
+        <div ref={sidebarRef} className={`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 w-64 bg-white overflow-y-auto transition-transform duration-300 lg:static lg:translate-x-0 sm:mt-[6.5rem] lg:m-0`}>
             <FilterSidebar toggleSidebar={toggleSidebar}/>
         </div>
         <div className='flex-grow p-4'>

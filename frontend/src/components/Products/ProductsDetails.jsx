@@ -86,10 +86,10 @@ if(error){
   return (
     <div className="p-6">
     {selectedProduct && (
-      <div className="max-2-6xl mx-auto bg-white p-8 rounded-lg">
+      <div className="p-8 mx-auto bg-white rounded-lg max-2-6xl">
         <div className="flex flex-col md:flex-row">
           {/* Left Thumbnails */}
-          <div className="hidden md:flex flex-col space-y-4 mr-6">
+          <div className="flex-col hidden mr-6 space-y-4 md:flex">
             {selectedProduct.images.map((image, index) => (
               <img
                 key={index}
@@ -108,12 +108,12 @@ if(error){
               <img
                 src={mainImage}
                 alt="Main Content"
-                className="w-full h-auto object-cover rounded-lg"
+                className="object-cover w-full h-auto rounded-lg"
               />
             </div>
           </div>
           {/* Mobile Thumbnail */}
-          <div className="md:hidden flex overscroll-x-scroll space-x-4 mb-4">
+          <div className="flex mb-4 space-x-4 md:hidden overscroll-x-scroll">
             {selectedProduct.images.map((image, index) => (
               <img
                 key={index}
@@ -128,16 +128,16 @@ if(error){
           </div>
           {/* Right Side */}
           <div className="md:w-1/2 md:ml-10">
-            <h1 className="text-2xl md:text-3xl font-semibold mb-2">
+            <h1 className="mb-2 text-2xl font-semibold md:text-3xl">
               {selectedProduct.name}
             </h1>
-            <p className="text-lg text-gray-600 mb-1 line-through">
+            <p className="mb-1 text-lg text-gray-600 line-through">
               {selectedProduct.originalPrice}
             </p>
-            <p className="text-xl text-gray-500 mb-2">
+            <p className="mb-2 text-xl text-gray-500">
               &#8377;{selectedProduct.price}
             </p>
-            <p className="text-gray-600 mb-2">{selectedProduct.description}</p>
+            <p className="mb-2 text-gray-600">{selectedProduct.description}</p>
             <div className="mb-4">
               <p className="text-gray-700">Color:</p>
               <div className="flex gap-2 mt-2">
@@ -176,16 +176,16 @@ if(error){
             </div>
             <div className="mb-6">
               <p className="text-gray-700">Quantity:</p>
-              <div className="flex items-center space-x-4 mt-2">
+              <div className="flex items-center mt-2 space-x-4">
                 <button
-                  className="px-2 py-1 bg-gray-200 rounded text-lg"
+                  className="px-2 py-1 text-lg bg-gray-200 rounded"
                   onClick={()=>handleQuantityChange("minus")}
                 >
                   -
                 </button>
                 <span className="text-lg">{quantity}</span>
                 <button
-                  className="px-2 py-1 bg-gray-200 rounded text-lg"
+                  className="px-2 py-1 text-lg bg-gray-200 rounded"
                   onClick={() => handleQuantityChange("plus")}
                 >
                   +
@@ -202,8 +202,8 @@ if(error){
             </button>
 
             <div className="mt-10 text-gray-700">
-              <h3 className="text-xl fontbold mb-4">Characteristics:</h3>
-              <table className="w-full text-left text-sm text-gray-600">
+              <h3 className="mb-4 text-xl fontbold">Characteristics:</h3>
+              <table className="w-full text-sm text-left text-gray-600">
                 <tbody>
                   <tr>
                     <td className="py-1">Brand</td>
@@ -219,7 +219,7 @@ if(error){
           </div>
         </div>
         <div className="mt-20">
-            <h2 className="text-2xl text-center font-medium mb-4">
+            <h2 className="mb-4 text-2xl font-medium text-center">
                 You May Also Like
             </h2>
             <ProductGrid products={similarProducts} loading={loading} error={error}/>
