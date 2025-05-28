@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const FilterSidebar = () => {
+const FilterSidebar = ({toggleSidebar}) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate()
@@ -96,6 +96,37 @@ const FilterSidebar = () => {
   return (
     <div className="p-4">
       <h3 className="mb-4 text-xl font-medium text-gray-800">Filter</h3>
+
+      {/* Sidebar close icon */}
+      <button
+        className="absolute text-2xl text-gray-500 top-4 right-4 hover:text-gray-800 focus:outline-none"
+        aria-label="Close sidebar"
+        onClick={toggleSidebar}
+        type="button"
+      >
+        &times;
+      </button>
+
+      {/* Reset Filters Button */}
+      <button
+        className="px-4 py-2 mb-6 font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300"
+        onClick={() => {
+          setFilters({
+            category: "",
+            color: "",
+            size: [],
+            material: [],
+            brand: [],
+            minPrice: 0,
+            maxPrice: 1000,
+          });
+          setPriceRange([0, 1000]);
+          setSearchParams({});
+          navigate("?");
+        }}
+      >
+        Reset Filters
+      </button>
 
       {/* Category Filter */}
       <div className="mb-6">
