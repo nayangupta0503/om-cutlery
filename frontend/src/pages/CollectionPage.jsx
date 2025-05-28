@@ -41,7 +41,7 @@ const CollectionPage = () => {
     <div className='flex flex-col lg:flex-row'>
         {/* Mobile Filter */}
         <button 
-        className='flex items-center justify-center p-2 border lg:hidden'
+        className='flex items-center justify-center p-2 border lg:hidden mt-[6.5rem] bg-white border-gray-300 rounded shadow hover:bg-gray-100 transition-colors duration-200'
         onClick={toggleSidebar}
         >
             <FaFilter className='mr-2'/> Filters

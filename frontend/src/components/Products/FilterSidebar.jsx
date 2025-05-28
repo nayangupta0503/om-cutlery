@@ -99,7 +99,7 @@ const FilterSidebar = ({toggleSidebar}) => {
 
       {/* Sidebar close icon */}
       <button
-        className="absolute text-2xl text-gray-500 top-4 right-4 hover:text-gray-800 focus:outline-none"
+        className="absolute text-2xl text-gray-500 top-4 right-4 hover:text-gray-800 focus:outline-none lg:hidden"
         aria-label="Close sidebar"
         onClick={toggleSidebar}
         type="button"
