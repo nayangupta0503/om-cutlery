@@ -1,21 +1,14 @@
 import React from 'react'
-import {TbBrandMeta} from 'react-icons/tb'
 import {IoLogoInstagram} from 'react-icons/io'
-import {RiTwitterXLine} from 'react-icons/ri'
 
 function Topbar() {
   return (
     <div className='text-white bg-rabbit-red'>
       <div className='container flex items-center justify-between px-4 py-3 mx-auto'>
         <div className='items-center hidden space-x-4 md:flex'>
-            <a className='hover:text-gray-300' href='#'>
-                <TbBrandMeta className='w-4 h-4'/>
-            </a>
-            <a href='#' className='hover:text-gray-300'>
+            <a href='https://www.instagram.com/omcutlury/' target="blank" 
+              rel="noopener noreferrer" className='hover:text-gray-300'>
                 <IoLogoInstagram className='w-4 h-4'/>
-            </a>
-            <a href='#' className='hover:text-gray-300'>
-                <RiTwitterXLine className='w-4 h-4'/>
             </a>
         </div>
         <div className='flex-grow text-sm text-center'>

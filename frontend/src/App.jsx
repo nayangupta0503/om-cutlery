@@ -32,7 +32,7 @@ function App() {
   return (
     <Provider store={store}>
     <BrowserRouter>
-    <Toaster position="top-right"></Toaster>
+    <Toaster position="top-right" duration={1000}></Toaster>
       <Routes>
         <Route path="/" element={<UserLayout />}>
         {/* user layout */}

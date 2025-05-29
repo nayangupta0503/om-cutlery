@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { TbBrandMeta } from "react-icons/tb";
 import { IoLogoInstagram } from "react-icons/io";
-import { RiTwitterXLine } from "react-icons/ri";
 import { FiPhoneCall } from "react-icons/fi"
 import { FaLocationDot } from "react-icons/fa6";
 
@@ -71,14 +69,6 @@ const Footer = () => {
         <div>
           <h3 className="mb-4 text-lg text-gray-800">Follow Us</h3>
           <div className="flex items-center mb-6 space-x-4">
-            <a 
-              href="https://www.facebook.com" 
-              target="blank" 
-              rel="noopener noreferrer"
-              className="hover:text-gray-300"
-              >
-                <TbBrandMeta className="w-5 h-5"/>
-              </a>
               <a 
               href="https://www.instagram.com/omcutlury/" 
               target="blank" 
@@ -86,14 +76,6 @@ const Footer = () => {
               className="hover:text-gray-300"
               >
                 <IoLogoInstagram className="w-5 h-5"/>
-              </a>
-              <a 
-              href="https://www.facebook.com" 
-              target="blank" 
-              rel="noopener noreferrer"
-              className="hover:text-gray-300"
-              >
-                <RiTwitterXLine className="w-4 h-4"/>
               </a>
           </div>
           <h3 className="mb-4 text-lg text-gray-800">Call Us</h3>
