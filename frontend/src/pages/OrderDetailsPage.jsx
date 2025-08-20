@@ -16,23 +16,23 @@ const OrderDetailsPage = () => {
   if(error) return <p>Error: {error}</p>
 
   return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6">Order Details</h2>
+    <div className="p-4 mx-auto max-w-7xl sm:p-6">
+      <h2 className="mb-6 text-2xl font-bold md:text-3xl">Order Details</h2>
       {!orderDetails ? (
         <p>No Order details found</p>
       ) : (
-        <div className="p-4 sm:p-6 rounded-lg border">
+        <div className="p-4 border rounded-lg sm:p-6">
           {/* Order Info */}
-          <div className="flex flex-col sm:flex-row justify-between mb-8">
+          <div className="flex flex-col justify-between mb-8 sm:flex-row">
             <div>
-              <h3 className="text-lg md:text-xl font-semibold">
+              <h3 className="text-lg font-semibold md:text-xl">
                 Order ID: #{orderDetails._id}
               </h3>
               <p className="text-gray-600">
                 {new Date(orderDetails.createdAt).toLocaleDateString()}
               </p>
             </div>
-            <div className="flex flex-col items-start sm:items-end mt-4 sm:mt-0">
+            <div className="flex flex-col items-start mt-4 sm:items-end sm:mt-0">
               <span
                 className={`${
                   orderDetails.isPaid
@@ -54,14 +54,20 @@ const OrderDetailsPage = () => {
             </div>
           </div>
           {/* Customer, Payment, Shipping Info */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
+          <div className="grid grid-cols-1 gap-8 mb-8 sm:grid-cols-2 md:grid-cols-3">
             <div>
-              <h4 className="text-lg font-semibold mb-2">Payment Info</h4>
+              <h4 className="mb-2 text-lg font-semibold">Customer Information</h4>
+              <p>Name: {orderDetails.user.name}</p>
+              <p>Phone: {orderDetails.user?.phone}</p>
+              <p>Email: {orderDetails.user?.email}</p>
+            </div>
+            <div>
+              <h4 className="mb-2 text-lg font-semibold">Payment Info</h4>
               <p>Payment Method: {orderDetails.paymentMethod}</p>
               <p>Status: {orderDetails.isPaid ? "Paid" : "Unpaid"}</p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-2">Shipping Info</h4>
+              <h4 className="mb-2 text-lg font-semibold">Shipping Info</h4>
               <p>Shipping Method: Standard</p>
               <p>
                 Address:{" "}
@@ -70,24 +76,24 @@ const OrderDetailsPage = () => {
             </div>
           </div>
           <div className="overflow-x-auto">
-            <h4 className="text-lg font-semibold mb-4">Products</h4>
-            <table className="min-w-full text-gray-600 mb-4">
+            <h4 className="mb-4 text-lg font-semibold">Products</h4>
+            <table className="min-w-full mb-4 text-gray-600">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="py-2 px-4">Name</th>
-                  <th className="py-2 px-4">Unit Price</th>
-                  <th className="py-2 px-4">Quantity</th>
-                  <th className="py-2 px-4">Total</th>
+                  <th className="px-4 py-2">Name</th>
+                  <th className="px-4 py-2">Unit Price</th>
+                  <th className="px-4 py-2">Quantity</th>
+                  <th className="px-4 py-2">Total</th>
                 </tr>
               </thead>
               <tbody>
                 {orderDetails.orderItems.map((item) => (
                   <tr key={item.productId} className="border-b">
-                    <td className="py-2 px-4 flex items-center">
+                    <td className="flex items-center px-4 py-2">
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-12 h-1/2 object-cover rounded-lg mr-4"
+                        className="object-cover w-12 mr-4 rounded-lg h-1/2"
                       />
                       <Link
                         to={`/product/${item.productId}`}
@@ -96,9 +102,9 @@ const OrderDetailsPage = () => {
                         {item.name}
                       </Link>
                     </td>
-                    <td className="py-2 px-4">&#8377;{item.price}</td>
-                    <td className="py-2 px-4">{item.quantity}</td>
-                    <td className="py-2 px-4">&#8377;{item.price * item.quantity}</td>
+                    <td className="px-4 py-2">&#8377;{item.price}</td>
+                    <td className="px-4 py-2">{item.quantity}</td>
+                    <td className="px-4 py-2">&#8377;{item.price * item.quantity}</td>
                   </tr>
                 ))}
               </tbody>

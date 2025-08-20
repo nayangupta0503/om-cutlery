@@ -45,6 +45,7 @@ const OrderManagement = () => {
               orders.map((order) => (
                 <tr
                   key={order._id}
+                  onClick={()=>navigate(`/order/${order._id}`)}
                   className="border-b cursor-pointer hover:bg-gray-50"
                 >
                   <td className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap">
