@@ -149,7 +149,7 @@ const [productData, setProductData] = useState({
           <label className="block mb-2 font-semibold">Brand</label>
           <input
             type="text"
-            name="category"
+            name="brand"
             value={productData.brand}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-md"
