@@ -73,6 +73,13 @@ const handleQuantityChange =(action) =>{
     if (selectedProduct?.images?.length > 0) {
       setMainImage(selectedProduct.images[0].url);
     }
+    // Set default color and size to the first available option
+    if (selectedProduct?.colors?.length > 0) {
+      setSelectedColor(selectedProduct.colors[0]);
+    }
+    if (selectedProduct?.sizes?.length > 0) {
+      setSelectedSize(selectedProduct.sizes[0]);
+    }
   }, [selectedProduct]);
 
 if(loading){
