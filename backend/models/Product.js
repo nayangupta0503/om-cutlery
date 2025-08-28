@@ -21,11 +21,11 @@ const productSchema = new mongoose.Schema(
     countInStock: {
       type: Number,
       // required: true,
-      default: 0,
+      // default: 0,
     },
     sku: {
       type: String,
-      unique: true,
+      //unique: true,
       //required: false,
     },
     category: {
@@ -41,7 +41,7 @@ const productSchema = new mongoose.Schema(
     },
     colors: {
       type: [String],
-      required: true,
+      //required: true,
     },
     collection: {
       type: String,
